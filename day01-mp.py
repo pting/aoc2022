@@ -5,6 +5,7 @@ Use multiprocessing - this is about 20x slower for the day 1 problem
 from multiprocessing import Pool
 import dill as pickle
 
+N = 3
 
 def x(numlist):
     return sum(numlist)
@@ -22,14 +23,15 @@ if __name__ == "__main__":
                 splitlist.append(temp)
                 temp = []
 
-    top3 = [0, 0, 0]
+    top = [0] * N
     with Pool(8) as p:
         res = p.map(sum, splitlist)
 
     for n in res:
-        top3.sort()
-        top3[0] = max(top3[0], n)
+        if n > top[0]:
+            top[0] = n
+            top.sort()
 
-    print(f"{top3}")
-    print(top3[0] + top3[1] + top3[2])
+    print(f"{top}")
+    print(sum(top))
 

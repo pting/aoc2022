@@ -8,8 +8,9 @@ def main():
         for line in f:
             line = line.rstrip()
             if not line:
-                top.sort()
-                top[0] = max(top[0], res)
+                if res > top[0]:
+                    top[0] = res
+                    top.sort()
                 res = 0
             else:
                 res += int(line)
