@@ -1,6 +1,6 @@
 
 def main():
-    with open('input.txt', 'r') as f:
+    with open('input01.txt', 'r') as f:
         res = 0
         top3 = [0, 0, 0]
 
