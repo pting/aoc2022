@@ -4,15 +4,17 @@ Use multiprocessing - this is about 20x slower for the day 1 problem
 """
 from multiprocessing import Pool
 import dill as pickle
+import os
 
 N = 3
+INPUTFILE=os.environ.get("AOC_INPUT", "input01.txt")
 
 def x(numlist):
     return sum(numlist)
 
 
 if __name__ == "__main__":
-    with open('input01.txt', 'r') as f:
+    with open(INPUTFILE, 'r') as f:
         splitlist = []
         temp = []
         for line in f:

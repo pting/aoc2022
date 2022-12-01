@@ -1,7 +1,10 @@
+import os
+
 N = 3
+INPUTFILE=os.environ.get("AOC_INPUT", "input01.txt")
 
 def main():
-    with open('input01.txt', 'r') as f:
+    with open(INPUTFILE, 'r') as f:
         res = 0
         top = [0] * N
 
