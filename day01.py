@@ -13,10 +13,8 @@ def main():
             else:
                 res += int(line)
 
-        print(f"{top3}")
-        res = top3[0] + top3[1] + top3[2]
-        print(f"Result: {res}")
-        return res
+        # print(f"{top3}")
+        print(top3[0] + top3[1] + top3[2])
 
 
 if __name__ == "__main__":
