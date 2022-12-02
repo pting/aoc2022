@@ -2,6 +2,9 @@ import os
 
 INPUTFILE = os.environ.get("AOC_INPUT", "input02.txt")
 
+inputA = {"A", "B", "C"}
+inputB = {"X", "Y", "Z"}
+
 part1 = {
     "A": {"X": 4, "Y": 8, "Z": 3},
     "B": {"Y": 5, "Z": 9, "X": 1},
@@ -25,6 +28,9 @@ def main():
             if not line:
                 continue
             line = line.split(" ")
+            if not (line[0] and line[0] in inputA and line[1] and line[1] in inputB):
+                continue
+
             # print(f"{line}")
 
             # Part 1
