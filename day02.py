@@ -1,60 +1,29 @@
 import os
 
-INPUTFILE=os.environ.get("AOC_INPUT", "input02.txt")
-
-myselect = {
-    "X": 1,
-    "Y": 2,
-    "Z": 3
-}
+INPUTFILE = os.environ.get("AOC_INPUT", "input02.txt")
 
 part1 = {
-    "A": {
-        "X": 3,
-        "Y": 6,
-        "Z": 0
-    },
-    "B": {
-        "Y": 3,
-        "Z": 6,
-        "X": 0
-    },
-    "C": {
-        "Z": 3,
-        "X": 6,
-        "Y": 0
-    }
+    "A": {"X": 4, "Y": 8, "Z": 3},
+    "B": {"Y": 5, "Z": 9, "X": 1},
+    "C": {"Z": 6, "X": 7, "Y": 2},
 }
 
 part2 = {
-    "A": {
-        "X": (0, "Z"),
-        "Y": (3, "X"),
-        "Z": (6, "Y")
-    },
-    "B": {
-        "X": (0, "X"),
-        "Y": (3, "Y"),
-        "Z": (6, "Z")
-    },
-    "C": {
-        "X": (0, "Y"),
-        "Y": (3, "Z"),
-        "Z": (6, "X")
-    }
+    "A": {"X": 3, "Y": 4, "Z": 8},
+    "B": {"X": 1, "Y": 5, "Z": 9},
+    "C": {"X": 2, "Y": 6, "Z": 7},
 }
 
+
 def main():
-    with open(INPUTFILE, 'r') as f:
+    with open(INPUTFILE, "r") as f:
         score1 = 0
         score2 = 0
-        round = 0
 
         for line in f:
             line = line.strip()
             line = line.split(" ")
             # print(f"{line}")
-            round = 0
 
             # Part 1
             # if line[1] == 'X':
@@ -72,11 +41,8 @@ def main():
             #     round += 6
             #     # print("Win")
 
-            round = myselect[line[1]]
-            round += part1[line[0]][line[1]]
-            score1 += round
+            score1 += part1[line[0]][line[1]]
 
-            round = 0
             # Part 2 - X:lose, Y:draw, Z:Win
             # if line[1] == 'X':
             #     if line[0] == 'A':
@@ -111,8 +77,7 @@ def main():
             #         round += 1
             #     round += 6
 
-            res = part2[line[0]][line[1]]
-            score2 += (res[0] + myselect[res[1]])
+            score2 += part2[line[0]][line[1]]
 
         print(f"Part 1: {score1}, Part 2: {score2}")
 
