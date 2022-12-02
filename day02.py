@@ -20,8 +20,8 @@ def main():
         score1 = 0
         score2 = 0
 
-        for line in f:
-            line = line.strip()
+        input = f.read().split("\n")
+        for line in input:
             line = line.split(" ")
             # print(f"{line}")
 
