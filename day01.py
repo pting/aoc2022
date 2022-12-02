@@ -3,12 +3,10 @@ import os
 N = 3
 INPUTFILE=os.environ.get("AOC_INPUT", "input01.txt")
 
-def main():
+def calc(N, input):
     res = 0
     top = [0] * N
-    with open(INPUTFILE, 'r') as f:
-        input = f.read().split("\n")
-        
+
     for line in input:
         if not line:
             if res > top[0]:
@@ -17,8 +15,17 @@ def main():
             res = 0
         else:
             res += int(line)
+    return sum(top)
 
-    print(sum(top))
+
+def main():
+    with open(INPUTFILE, 'r') as f:
+        input = f.read().split("\n")
+
+    ret = {}
+    ret["part_one"] = calc(1, input)
+    ret["part_two"] = calc(3, input)
+    print(f"{ret}")
 
 
 if __name__ == "__main__":

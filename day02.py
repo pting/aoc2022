@@ -87,7 +87,10 @@ def main():
 
             score2 += part2[line[0]][line[1]]
 
-        print(f"Part 1: {score1}, Part 2: {score2}")
+        ret = {}
+        ret["part_one"] = score1
+        ret["part_two"] = score2
+        print(f"{ret}")
 
 
 if __name__ == "__main__":
