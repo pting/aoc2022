@@ -22,6 +22,8 @@ def main():
 
         input = f.read().split("\n")
         for line in input:
+            if not line:
+                continue
             line = line.split(" ")
             # print(f"{line}")
 
