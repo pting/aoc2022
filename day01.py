@@ -1,4 +1,5 @@
 import os
+import json
 
 N = 3
 INPUTFILE=os.environ.get("AOC_INPUT", "input01.txt")
@@ -25,7 +26,7 @@ def main():
     ret = {}
     ret["part_one"] = calc(1, input)
     ret["part_two"] = calc(3, input)
-    print(f"{ret}")
+    print(f"{json.dumps(ret)}")
 
 
 if __name__ == "__main__":

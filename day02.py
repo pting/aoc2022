@@ -1,4 +1,5 @@
 import os
+import json
 
 INPUTFILE = os.environ.get("AOC_INPUT", "input02.txt")
 
@@ -90,7 +91,7 @@ def main():
         ret = {}
         ret["part_one"] = score1
         ret["part_two"] = score2
-        print(f"{ret}")
+        print(f"{json.dumps(ret)}")
 
 
 if __name__ == "__main__":
