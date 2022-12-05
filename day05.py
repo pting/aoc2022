@@ -20,12 +20,11 @@ with open(os.environ.get("AOC_INPUT", "input05.txt"), "r") as f:
 
 
 def getstacks():
-    ns = len(PARSEDINPUT[0])
     res = []
-    for i in range(ns):
-        res.append([])
-
     for line in PARSEDINPUT:
+        ns = len(line)
+        while len(res) < ns:
+            res.append([])
         for i, stack in enumerate(line):
             id = re.findall("\[[a-zA-Z]+\]", stack)
             if id:
