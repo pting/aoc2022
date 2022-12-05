@@ -13,14 +13,12 @@ with open(os.environ.get("AOC_INPUT", "input05.txt"), "r") as f:
     MOVEMENT = []
     for line in INPUT:
         if line:
-            if "[" in line:
+            if line.startswith("m"):
+                move = [int(x) for x in re.match("move (\d+) from (\d+) to (\d+)", line).groups()]
+                MOVEMENT.append(move)
+            elif "[" in line:
                 STACKINPUT.append(parsestack(line))
-            elif "move" in line:
-                move = re.match("move (\d+) from (\d+) to (\d+)", line)
-                moveints = []
-                for item in move.groups():
-                    moveints.append(int(item))
-                MOVEMENT.append(moveints)
+    # One for each part
     STACK1 = []
     STACK2 = []
     # Parse in reverse order to set up queues
@@ -38,7 +36,7 @@ with open(os.environ.get("AOC_INPUT", "input05.txt"), "r") as f:
 
 def part1():
     for moveint in MOVEMENT:
-        for i in range(moveint[0]):
+        for _ in range(moveint[0]):
             id = STACK1[moveint[1]-1].pop()
             STACK1[moveint[2]-1].append(id)
     return "".join([row[-1][0][1] for row in STACK1])
@@ -47,7 +45,7 @@ def part1():
 def part2():
     for moveint in MOVEMENT:
         m = []
-        for i in range(moveint[0]):
+        for _ in range(moveint[0]):
             id = STACK2[moveint[1]-1].pop()
             m.append(id)
         for id in m[::-1]:
