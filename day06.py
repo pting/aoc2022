@@ -34,10 +34,8 @@ def helper(n):
 
 def helper2(n):
     i = n
-    while i < len(INPUT):
-        set4 = set(INPUT[i - n: i])
-        # print(f"n = {n}, i = {i}, last4 = {INPUT[n - i: i]}, set4 = {set4}")
-        if len(set4) == n:
+    while True:
+        if len(set(INPUT[i - n: i])) == n:
             return i
         else:
             i += 1
