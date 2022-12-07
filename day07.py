@@ -68,14 +68,12 @@ def part1():
 
 def part2():
     target = treesize("/") - 40000000
-    print(target)
-
     mindif = float("inf")
     mindir = ""
 
     for d in dirs:
         dif = treesize(d) - target
-        if dif > 0 and dif < mindif:
+        if dif >= 0 and dif < mindif:
             mindif = dif
             mindir = d
     return treesize(mindir)
