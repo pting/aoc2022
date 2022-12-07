@@ -13,6 +13,8 @@ with open(os.environ.get("AOC_INPUT", "input07.txt"), "r") as f:
     curr = "/"
 
     for line in INPUT:
+        if not line:
+            continue
         if line.startswith("$"):
             if line.startswith("$ cd "):
                 dirname = line.split("$ cd ")[1]
