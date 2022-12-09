@@ -10,17 +10,10 @@ def helper(T):
             continue
 
         move = line.split(" ")
-        dir = move[0]
+        movefunc = make_move(move[0])
         n = int(move[1])
         while n:
-            if dir == "L":
-                T[0][0] -= 1
-            elif dir == "R":
-                T[0][0] += 1
-            elif dir == "U":
-                T[0][1] += 1
-            elif dir == "D":
-                T[0][1] -= 1
+            movefunc(T[0])
             n -= 1
             movenext(T)
 
@@ -50,6 +43,34 @@ def movenext(tlist):
             moved = True
     if moved:
         movenext(tlist[1:])
+
+
+def moveL(node):
+    node[0] -= 1
+
+
+def moveR(node):
+    node[0] += 1
+
+
+def moveU(node):
+    node[1] += 1
+
+
+def moveD(node):
+    node[1] -= 1
+
+
+movement = {
+    "L": moveL,
+    "R": moveR,
+    "U": moveU,
+    "D": moveD,
+}
+
+
+def make_move(dir):
+    return movement[dir]
 
 
 with open(os.environ.get("AOC_INPUT", "input09.txt"), "r") as f:
