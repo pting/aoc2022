@@ -5,7 +5,7 @@ def pr(matrix):
     for r in matrix:
         print(r)
 
-m = set((0,0))
+m = set([(0, 0)])
 
 def isfar(h, t):
     return (abs(h[0] - t[0]) > 1 or abs(h[1] - t[1]) > 1)
@@ -75,7 +75,7 @@ def part1():
 def part2():
     T = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
     global m
-    m = set((0,0))
+    m = set([(0,0)])
     # print(f"Begin: {T}")
     for line in INPUT:
         if not line:
