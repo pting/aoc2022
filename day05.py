@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import sys
 
 
 def parsestack(line):
@@ -8,7 +9,7 @@ def parsestack(line):
     return [line[i : i + n] for i in range(0, len(line), n)]
 
 
-with open(os.environ.get("AOC_INPUT", "input05.txt"), "r") as f:
+with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
     INPUT = f.read().split("\n")
     STACKINPUT = []
     MOVEMENT = []

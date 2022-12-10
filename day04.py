@@ -1,6 +1,6 @@
 import os
 import json
-
+import sys
 
 def getpair(line):
     pair = line.split(",")
@@ -8,7 +8,7 @@ def getpair(line):
     return (int(p1[0]), int(p1[1])), (int(p2[0]), int(p2[1]))
 
 
-with open(os.environ.get("AOC_INPUT", "input04.txt"), "r") as f:
+with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
     INPUT = f.read().split("\n")
     parsedInput = []
     for line in INPUT:

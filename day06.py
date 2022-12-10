@@ -1,8 +1,8 @@
 import os
 import json
-import re
+import sys
 
-with open(os.environ.get("AOC_INPUT", "input06.txt"), "r") as f:
+with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
     INPUT = f.read()
 
 

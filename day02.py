@@ -1,7 +1,8 @@
 import os
 import json
+import sys
 
-INPUTFILE = os.environ.get("AOC_INPUT", "input02.txt")
+INPUTFILE = os.environ.get("AOC_INPUT", sys.argv[1])
 
 inputA = {"A", "B", "C"}
 inputB = {"X", "Y", "Z"}

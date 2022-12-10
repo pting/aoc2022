@@ -1,8 +1,9 @@
 import os
 import json
+import sys
 
 N = 3
-INPUTFILE=os.environ.get("AOC_INPUT", "input01.txt")
+INPUTFILE=os.environ.get("AOC_INPUT", sys.argv[1])
 
 def calc(N, input):
     res = 0

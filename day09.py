@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 
 m = set([(0, 0)])
 
@@ -73,7 +74,7 @@ def make_move(dir):
     return movement[dir]
 
 
-with open(os.environ.get("AOC_INPUT", "input09.txt"), "r") as f:
+with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
     INPUT = f.read().split("\n")
 
 
