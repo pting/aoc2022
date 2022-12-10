@@ -2,12 +2,11 @@
 set -e
 
 echo ""
-echo "#############################"
-echo "####   Running Week $1   ####"
-echo "#############################"
+echo "\033[36mRunning $1 \033[0m"
 echo ""
-python day$1.py test$1.txt
+python $1 $2
 echo ""
-echo "============================="
+echo "\033[36m============================= \033[0m"
 echo ""
-time python day$1.py input$1.txt
+time python $1 $3
+echo ""

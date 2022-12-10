@@ -32,11 +32,13 @@ class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
         fname = event.src_path
         if fname.endswith(".py"):
-            f = fname.split("/")[-1]
-            found = re.findall(r"\d+", f)
+            path = "/".join(fname.split("/")[:-1])
+            # print(f"path = {path}")
+            found = re.findall(r"\d+", fname)
             if found:
-                week = found[0]
-                os.system("sh aoc.sh " + week)
+                week = found[-1]
+                os.system(f"sh aoc.sh {fname} {path}/test{week}.txt {path}/input{week}.txt")
+                
 
 
 if __name__ == "__main__":
