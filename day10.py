@@ -42,7 +42,7 @@ def do2(c, X, res, p2):
     if c % 40 == 0:
         p = "".join(res)
         p2 = p2 + "\n" + p
-        # print(p)
+        print(p)
         res = []
         c = 0
 
@@ -68,10 +68,54 @@ def part2():
     return p2
 
 
+def part1b():
+    o = [0]
+    x = 1
+    for line in INPUT:
+        if line:
+            if line[0] == "n":
+                o.append(x)
+            else:
+                o.append(x)
+                o.append(x)
+                x += int(line.split()[1])
+    o.append(x)
+
+    return sum([x * y for x, y in list(enumerate(o))[20::40]])
+
+
+def part2b():
+    o = []
+    x = 1
+    res = []
+    for line in INPUT:
+        if line:
+            if line[0] == "n":
+                o.append(x)
+            else:
+                o.append(x)
+                o.append(x)
+                x += int(line.split()[1])
+
+    def mod40(t):
+        return (t[0] % 40, t[1])
+
+    for t in map(mod40, list(enumerate(o))):
+        if t[0] == 0:
+            res.append("\n")
+        if t[0] in [t[1] - 1, t[1], t[1] + 1]:
+            res.append("#")
+        else:
+            res.append(".")
+    ret = "".join(res)
+    # print(ret)
+    return ret
+
+
 def main():
     ret = {}
-    ret["part_one"] = part1()
-    ret["part_two"] = part2()
+    ret["part_one"] = part1b()
+    ret["part_two"] = part2b()
     print(f"{json.dumps(ret)}")
 
 
