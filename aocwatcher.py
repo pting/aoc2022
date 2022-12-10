@@ -3,6 +3,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import os
 import re
+import sys
 
 
 class Watcher:
@@ -14,14 +15,19 @@ class Watcher:
     def run(self):
         self.observer.schedule(self.handler, self.directory, recursive=True)
         self.observer.start()
-        print("\nWatcher Running in {}/\n".format(self.directory))
+        print("\nWatcher Started...")
         try:
+            # animation = "* "
             while True:
-                time.sleep(1)
+                # for i in range(2):
+                #     sys.stdout.write("\r\r\r " + animation[i] + " ")
+                #     sys.stdout.flush()
+                #     time.sleep(1)
+                time.sleep(10)
         except:
             self.observer.stop()
         self.observer.join()
-        print("\nWatcher Terminated\n")
+        print("\nWatcher Terminated.")
 
 
 class MyHandler(FileSystemEventHandler):
@@ -31,7 +37,7 @@ class MyHandler(FileSystemEventHandler):
 
     def on_modified(self, event):
         fname = event.src_path
-        if fname.endswith(".py"):
+        if fname.endswith(".py") and "aocwatcher" not in fname:
             path = "/".join(fname.split("/")[:-1])
             # print(f"path = {path}")
             found = re.findall(r"\d+", fname)
