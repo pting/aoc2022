@@ -103,7 +103,7 @@ def part2b():
     for t in map(mod40, list(enumerate(o))):
         if t[0] == 0:
             res.append("\n")
-        if t[0] in [t[1] - 1, t[1], t[1] + 1]:
+        if t[0] == t[1] or t[0] == t[1] - 1 or t[0] == t[1] + 1:
             res.append("#")
         else:
             res.append(".")
