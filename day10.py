@@ -1,8 +1,9 @@
 import os
+import sys
 import json
 
 
-with open(os.environ.get("AOC_INPUT", "input10.txt"), "r") as f:
+with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
     INPUT = f.read().split("\n")
 
 
