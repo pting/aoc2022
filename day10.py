@@ -3,7 +3,9 @@ import sys
 import json
 
 
-with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
+path = os.path.dirname(os.path.abspath(__file__))
+inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input09.txt")
+with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
     INPUT = f.read().split("\n")
 
 

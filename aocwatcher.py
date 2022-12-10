@@ -43,8 +43,9 @@ class MyHandler(FileSystemEventHandler):
             found = re.findall(r"\d+", fname)
             if found:
                 week = found[-1]
-                os.system(f"sh aoc.sh {fname} {path}/test{week}.txt {path}/input{week}.txt")
-                
+                os.system(
+                    f"sh aoc.sh {fname} {path}/test{week}.txt {path}/input{week}.txt {week}"
+                )
 
 
 if __name__ == "__main__":
