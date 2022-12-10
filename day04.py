@@ -2,6 +2,7 @@ import os
 import json
 import sys
 
+
 def getpair(line):
     pair = line.split(",")
     p1, p2 = pair[0].split("-"), pair[1].split("-")

@@ -3,7 +3,8 @@ import json
 import sys
 
 N = 3
-INPUTFILE=os.environ.get("AOC_INPUT", sys.argv[1])
+INPUTFILE = os.environ.get("AOC_INPUT", sys.argv[1])
+
 
 def calc(N, input):
     res = 0
@@ -21,7 +22,7 @@ def calc(N, input):
 
 
 def main():
-    with open(INPUTFILE, 'r') as f:
+    with open(INPUTFILE, "r") as f:
         input = f.read().split("\n")
 
     ret = {}

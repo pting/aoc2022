@@ -4,16 +4,15 @@ from watchdog.events import FileSystemEventHandler
 import os
 import re
 
-class Watcher:
 
+class Watcher:
     def __init__(self, directory=".", handler=FileSystemEventHandler()):
         self.observer = Observer()
         self.handler = handler
         self.directory = directory
 
     def run(self):
-        self.observer.schedule(
-            self.handler, self.directory, recursive=True)
+        self.observer.schedule(self.handler, self.directory, recursive=True)
         self.observer.start()
         print("\nWatcher Running in {}/\n".format(self.directory))
         try:
@@ -34,11 +33,12 @@ class MyHandler(FileSystemEventHandler):
         fname = event.src_path
         if fname.endswith(".py"):
             f = fname.split("/")[-1]
-            found = re.findall(r'\d+', f)
+            found = re.findall(r"\d+", f)
             if found:
                 week = found[0]
-                os.system('sh aoc.sh ' + week)
+                os.system("sh aoc.sh " + week)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     w = Watcher(".", MyHandler())
     w.run()

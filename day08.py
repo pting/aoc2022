@@ -2,9 +2,11 @@ import os
 import json
 import sys
 
+
 def pr(matrix):
     for r in matrix:
         print(r)
+
 
 with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
     INPUT = f.read().split("\n")
@@ -49,7 +51,7 @@ def isvis(r, c):
 
     return False
 
- 
+
 def dist(r, c):
     up = 0
     for i in reversed(range(r)):

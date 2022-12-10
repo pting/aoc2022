@@ -9,7 +9,7 @@ with open(os.environ.get("AOC_INPUT", sys.argv[1]), "r") as f:
 def helper(n):
     i = n
     while True:
-        if len(set(INPUT[i - n: i])) == n:
+        if len(set(INPUT[i - n : i])) == n:
             return i
         else:
             i += 1
