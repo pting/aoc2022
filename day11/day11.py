@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import re
+import copy
 
 monkeys = {}
 lcm = 1
@@ -52,14 +53,14 @@ with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
                 target = re.findall(r"\d+", line)[-1]
                 monkeys[id]["F"] = target
 
-    monkeys2 = monkeys.copy()
+    monkeys2 = copy.deepcopy(monkeys)
 
 
 def runop(i, op):
     if op == "*o":
-        return(i * i)
+        return i * i
     if op == "+o":
-        return(i + i)
+        return i + i
     if op.startswith("*"):
         num = int(re.findall(r"\d+", op)[-1])
         return i * num
@@ -81,7 +82,7 @@ def part1():
             # print(items)
             m["items"] = []
             for i in items:
-                new = runop(i, m['opdesc'])
+                new = runop(i, m["opdesc"])
                 # print(f"Worry level {i} to {new} opdesc: {m['opdesc']}")
                 new = new // 3
                 # print(f"Worry level is divided by 3 to {new}")
@@ -116,7 +117,7 @@ def part2():
             # print(items)
             m["items"] = []
             for i in items:
-                new = runop(i, m['opdesc'])
+                new = runop(i, m["opdesc"])
                 # print(f"Worry level {i} to {new} opdesc: {m['opdesc']}")
                 # new = new // 3
                 # print(f"Worry level is divided by 3 to {new}")
@@ -132,7 +133,7 @@ def part2():
                 # print(f"monkey {id} count = {m['count']}")
     counts = []
     for _, m in monkeys2.items():
-            counts.append(m["count"])
+        counts.append(m["count"])
     counts.sort()
     return counts[-1] * counts[-2]
 
