@@ -38,10 +38,7 @@ def part1():
         for i, m in enumerate(monkey):
             # print()
             # print(m)
-            items = m[0][:]
-            # print(items)
-            m[0] = []
-            for n in items:
+            for n in m[0]:
                 new = m[1](n)
                 # print(f"Worry level {n} to {new}")
                 new = new // 3
@@ -55,6 +52,7 @@ def part1():
                     monkey[m[4]][0].append(new)
                     # print(f"Item with worry level {new} is thrown to monkey {m[4]}")
                 counts[i] += 1
+            m[0] = []
 
     counts.sort()
     return counts[-1] * counts[-2]
@@ -70,8 +68,7 @@ def part2():
         # r += 1
         for i, m in enumerate(monkey2):
             for n in m[0]:
-                new = m[1](n)
-                new %= lcm
+                new = m[1](n) % lcm
                 if new % m[2] == 0:
                     monkey2[m[3]][0].append(new)
                 else:
