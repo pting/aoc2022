@@ -4,136 +4,94 @@ import json
 import re
 import copy
 
-monkeys = {}
+monkey = []
 lcm = 1
 
 path = os.path.dirname(os.path.abspath(__file__))
 inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input.txt")
 with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
-    INPUT = f.read().split("\n")
+    groups = f.read().strip().split("\n\n")
 
-    id = None
-    for line in INPUT:
-        if line:
-            if line.startswith("M"):
-                id = re.findall(r"\d+", line)[-1]
-                if id not in monkeys:
-                    monkeys[id] = {}
-                    monkeys[id]["count"] = 0
-                    continue
-            if line.startswith("  S"):
-                items = re.findall(r"\d+", line)
-                monkeys[id]["items"] = [int(x) for x in items]
-                continue
-            if line.startswith("  O"):
-                o = line.split("=")[1]
-                op = o.split()
-                operation = op[-2]
-                num = op[-1]
-                if num == "old":
-                    if operation == "+":
-                        monkeys[id]["opdesc"] = "+o"
-                    elif operation == "*":
-                        monkeys[id]["opdesc"] = "*o"
-                else:
-                    if operation == "+":
-                        monkeys[id]["opdesc"] = f"+ {num}"
-                    elif operation == "*":
-                        monkeys[id]["opdesc"] = f"* {num}"
-                continue
-            if line.startswith("  T"):
-                num = int(re.findall(r"\d+", line)[-1])
-                lcm = lcm * num
-                monkeys[id]["divby"] = num
-                continue
-            if line.startswith("    If true"):
-                target = re.findall(r"\d+", line)[-1]
-                monkeys[id]["T"] = target
-            if line.startswith("    If false"):
-                target = re.findall(r"\d+", line)[-1]
-                monkeys[id]["F"] = target
+    for g in groups:
+        l = g.splitlines()
+        mon = []
+        mon.append(list(map(int, re.findall(r"\d+", l[1]))))
+        lamb = f"lambda old:{l[2].split('=')[-1]}"
+        mon.append(eval(lamb))
+        prime = int(re.findall(r"\d+", l[3])[0])
+        lcm *= prime
+        mon.append(prime)
+        mon.append(int(re.findall(r"\d+", l[4])[0]))
+        mon.append(int(re.findall(r"\d+", l[5])[0]))
+        monkey.append(mon)
 
-    monkeys2 = copy.deepcopy(monkeys)
-
-
-def runop(i, op):
-    if op == "*o":
-        return i * i
-    if op == "+o":
-        return i + i
-    if op.startswith("*"):
-        num = int(re.findall(r"\d+", op)[-1])
-        return i * num
-    if op.startswith("+"):
-        num = int(re.findall(r"\d+", op)[-1])
-        return i + num
+    # print(monkey)
+    monkey2 = copy.deepcopy(monkey)
 
 
 def part1():
     rounds = 20
+    counts = [0] * len(monkey)
 
     while rounds > 0:
         # print(f"Round {rounds}")
         rounds -= 1
-        for id, m in monkeys.items():
+        for i, m in enumerate(monkey):
             # print()
             # print(m)
-            items = m["items"][:]
+            items = m[0][:]
             # print(items)
-            m["items"] = []
-            for i in items:
-                new = runop(i, m["opdesc"])
-                # print(f"Worry level {i} to {new} opdesc: {m['opdesc']}")
+            m[0] = []
+            for n in items:
+                new = m[1](n)
+                # print(f"Worry level {n} to {new}")
                 new = new // 3
                 # print(f"Worry level is divided by 3 to {new}")
-                if new % m["divby"] == 0:
-                    # print(f"Current worry level is divisible by {m['divby']}")
-                    monkeys[m["T"]]["items"].append(new)
-                    # print(f"Item with worry level {n} is thrown to monkey {m['T']}")
+                if new % m[2] == 0:
+                    # print(f"Current worry level is divisible by {m[2]}")
+                    monkey[m[3]][0].append(new)
+                    # print(f"Item with worry level {new} is thrown to monkey {m[3]}")
                 else:
-                    # print(f"Current worry level is not divisible by {m['divby']}")
-                    monkeys[m["F"]]["items"].append(new)
-                    # print(f"Item with worry level {n} is thrown to monkey {m['F']}")
-                m["count"] += 1
-                # print(f"monkey {id} count = {m['count']}")
-    counts = []
-    for _, m in monkeys.items():
-        counts.append(m["count"])
+                    # print(f"Current worry level is not divisible by {m[2]}")
+                    monkey[m[4]][0].append(new)
+                    # print(f"Item with worry level {new} is thrown to monkey {m[4]}")
+                counts[i] += 1
+
     counts.sort()
     return counts[-1] * counts[-2]
 
 
 def part2():
     rounds = 10000
-    r = 0
+    counts = [0] * len(monkey2)
+    # r = 0
+
     while rounds > 0:
-        r += 1
-        # print(f"Round {r}")
+        # print(f"Round {rounds}")
         rounds -= 1
-        for id, m in monkeys2.items():
+        # r += 1
+        for i, m in enumerate(monkey2):
             # print()
             # print(m)
-            items = m["items"]
+            items = m[0][:]
             # print(items)
-            m["items"] = []
-            for i in items:
-                new = runop(i, m["opdesc"])
-                # print(f"Worry level {i} to {new} opdesc: {m['opdesc']}")
+            m[0] = []
+            for n in items:
+                new = m[1](n)
+                # print(f"Worry level {n} to {new}")
                 # new = new // 3
                 # print(f"Worry level is divided by 3 to {new}")
-                if new % m["divby"] == 0:
-                    # print(f"Current worry level is divisible by {m['divby']}")
-                    monkeys2[m["T"]]["items"].append(new % lcm)
-                    # print(f"Item with worry level {n} is thrown to monkey {m['T']}")
+                if new % m[2] == 0:
+                    # print(f"Current worry level is divisible by {m[2]}")
+                    monkey2[m[3]][0].append(new % lcm)
+                    # print(f"Item with worry level {new} is thrown to monkey {m[3]}")
                 else:
-                    # print(f"Current worry level is not divisible by {m['divby']}")
-                    monkeys2[m["F"]]["items"].append(new % lcm)
-                    # print(f"Item with worry level {n} is thrown to monkey {m['F']}")
-                m["count"] += 1
-                # print(f"monkey {id} count = {m['count']}")
-    counts = []
-    for _, m in monkeys2.items():
-        counts.append(m["count"])
+                    # print(f"Current worry level is not divisible by {m[2]}")
+                    monkey2[m[4]][0].append(new % lcm)
+                    # print(f"Item with worry level {new} is thrown to monkey {m[4]}")
+                counts[i] += 1
+        # if r == 1 or r == 20 or r % 1000 == 0:
+        #     print(counts)
     counts.sort()
     return counts[-1] * counts[-2]
 
