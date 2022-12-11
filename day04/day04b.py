@@ -4,7 +4,7 @@ import sys
 import json
 
 path = os.path.dirname(os.path.abspath(__file__))
-inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input04.txt")
+inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input.txt")
 with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
     data = re.findall("(\d+)-(\d+),(\d+)-(\d+)", f.read())
     data = [[int(e) for e in row] for row in data]

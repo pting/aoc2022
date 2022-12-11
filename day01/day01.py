@@ -4,7 +4,7 @@ import sys
 
 N = 3
 path = os.path.dirname(os.path.abspath(__file__))
-inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input01.txt")
+inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input.txt")
 INPUTFILE = os.environ.get("AOC_INPUT", inputname)
 
 

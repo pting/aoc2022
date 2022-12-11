@@ -44,7 +44,7 @@ class MyHandler(FileSystemEventHandler):
             if found:
                 week = found[-1]
                 os.system(
-                    f"sh aoc.sh {fname} {path}/test{week}.txt {path}/input{week}.txt {week}"
+                    f"sh aoc.sh {fname} {path}/test.txt {path}/input.txt {week}"
                 )
 
 

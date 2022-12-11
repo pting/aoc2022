@@ -13,13 +13,18 @@ def part2():
 
     for line in INPUT:
         if line:
-            pass
+            for l in line:
+
+                pass
+
 
 def part1():
 
     for line in INPUT:
         if line:
-            pass
+            for l in line:
+
+                pass
 
 
 def main():
