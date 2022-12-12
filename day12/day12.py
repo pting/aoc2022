@@ -33,6 +33,7 @@ with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
 
 
 def part1():
+    """BFS from start and end, meet in the middle. This saves roughly 1/3 runtime."""
     queue = [(curr[0], curr[1], 0)]
     q2 = [(target[0], target[1], 0)]
     visited = {}  # (r, c) = num steps to target
@@ -88,87 +89,60 @@ def part1():
                         queue.append((r + 1, c, depth + 1))
 
 
-def part2():
-    start = []
-
-    for r, row in enumerate(map):
-        for c, col in enumerate(row):
-            if col == ord("a"):
-                start.append((r, c, 0))
-    # print(start)
-    total = float("inf")
-    for s in start:
-        # print(f"Starting {s}")
-        ret = bfs(s)
-        # print(f"got {ret}")
-        if ret:
-            total = min(total, ret)
-    return total
-
-
-visited2 = {}
-q2 = [(target[0], target[1], 0)]
-
-
-def bfs(s):
-    queue = []
-    queue.append(s)
-    visited = {}
-    global q2
+def part1b():
+    queue = [(curr[0], curr[1], 0)]
+    visited = set()
 
     while queue:
-        if q2:
-            (r, c, d2) = q2.pop(0)
-            if [r, c] == curr:
-                return d2
-            if (r, c) in visited:
-                if visited[(r, c)]:
-                    return d2 + visited[(r, c)]
-            if (r, c) not in visited2:
-                visited2[(r, c)] = d2
-                # right
-                if c + 1 < size[1]:
-                    if map[r][c + 1] >= map[r][c] - 1:
-                        q2.append((r, c + 1, d2 + 1))
-                # left
-                if c - 1 >= 0:
-                    if map[r][c - 1] >= map[r][c] - 1:
-                        q2.append((r, c - 1, d2 + 1))
-                # up
-                if r - 1 >= 0:
-                    if map[r - 1][c] >= map[r][c] - 1:
-                        q2.append((r - 1, c, d2 + 1))
-                # down
-                if r + 1 < size[0]:
-                    if map[r + 1][c] >= map[r][c] - 1:
-                        q2.append((r + 1, c, d2 + 1))
+        (r, c, depth) = queue.pop(0)
+        if [r, c] == target:
+            return depth
+        if (r, c) not in visited:
+            visited.add((r, c))
+            # right
+            if c + 1 < size[1]:
+                if map[r][c + 1] <= map[r][c] + 1:
+                    queue.append((r, c + 1, depth + 1))
+            # left
+            if c - 1 >= 0:
+                if map[r][c - 1] <= map[r][c] + 1:
+                    queue.append((r, c - 1, depth + 1))
+            # up
+            if r - 1 >= 0:
+                if map[r - 1][c] <= map[r][c] + 1:
+                    queue.append((r - 1, c, depth + 1))
+            # down
+            if r + 1 < size[0]:
+                if map[r + 1][c] <= map[r][c] + 1:
+                    queue.append((r + 1, c, depth + 1))
 
-        if queue:
-            (r, c, depth) = queue.pop(0)
-            if [r, c] == target:
-                return depth
-            if (r, c) in visited2:
-                if visited2[(r, c)]:
-                    return depth + visited2[(r, c)]
 
-            if (r, c) not in visited:
-                visited[(r, c)] = depth
-                # right
-                if c + 1 < size[1]:
-                    if map[r][c + 1] <= map[r][c] + 1:
-                        queue.append((r, c + 1, depth + 1))
-                # left
-                if c - 1 >= 0:
-                    if map[r][c - 1] <= map[r][c] + 1:
-                        queue.append((r, c - 1, depth + 1))
-                # up
-                if r - 1 >= 0:
-                    if map[r - 1][c] <= map[r][c] + 1:
-                        queue.append((r - 1, c, depth + 1))
-                # down
-                if r + 1 < size[0]:
-                    if map[r + 1][c] <= map[r][c] + 1:
-                        queue.append((r + 1, c, depth + 1))
+def part2():
+    q2 = [(target[0], target[1], 0)]
+    visited2 = {}
+
+    while q2:
+        (r, c, d2) = q2.pop(0)
+        if map[r][c] == ord("a"):
+            return d2
+        if (r, c) not in visited2:
+            visited2[(r, c)] = d2
+            # right
+            if c + 1 < size[1]:
+                if map[r][c + 1] >= map[r][c] - 1:
+                    q2.append((r, c + 1, d2 + 1))
+            # left
+            if c - 1 >= 0:
+                if map[r][c - 1] >= map[r][c] - 1:
+                    q2.append((r, c - 1, d2 + 1))
+            # up
+            if r - 1 >= 0:
+                if map[r - 1][c] >= map[r][c] - 1:
+                    q2.append((r - 1, c, d2 + 1))
+            # down
+            if r + 1 < size[0]:
+                if map[r + 1][c] >= map[r][c] - 1:
+                    q2.append((r + 1, c, d2 + 1))
 
 
 def main():
