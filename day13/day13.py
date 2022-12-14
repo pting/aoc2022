@@ -74,8 +74,8 @@ def part2():
             smaller += 1
         elif checkp([[6]], pp):
             larger -= 1
-    print(smaller)
-    print(larger)
+    # print(smaller)
+    # print(larger)
     return(smaller * larger)
         
 
@@ -95,7 +95,7 @@ def part2sort():
     ret = 1
     for i, v in enumerate(sp2):
         if v in [[[2]], [[6]]]:
-            print(i + 1)
+            # print(i + 1)
             ret *= i + 1
     return(ret)
 

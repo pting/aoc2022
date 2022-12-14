@@ -126,7 +126,7 @@ def part2():
         maxqlen = max(maxqlen, len(q2))
         (r, c, d2) = q2.pop(0)
         if map[r][c] == ord("a"):
-            print(f"Part2 remaining queue length: {len(q2)}, max {maxqlen}")
+            # print(f"Part2 remaining queue length: {len(q2)}, max {maxqlen}")
             return d2
         if (r, c) not in visited2:
             visited2[(r, c)] = d2
