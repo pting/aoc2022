@@ -120,10 +120,13 @@ def part1b():
 def part2():
     q2 = [(target[0], target[1], 0)]
     visited2 = {}
+    maxqlen = 0
 
     while q2:
+        maxqlen = max(maxqlen, len(q2))
         (r, c, d2) = q2.pop(0)
         if map[r][c] == ord("a"):
+            print(f"Part2 remaining queue length: {len(q2)}, max {maxqlen}")
             return d2
         if (r, c) not in visited2:
             visited2[(r, c)] = d2
