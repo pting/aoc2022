@@ -11,7 +11,7 @@ pattern = re.compile(r"-?\d+")
 
 path = os.path.dirname(os.path.abspath(__file__))
 inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input.txt")
-with open(os.environ.get("aoc_input", inputname), "r") as f:
+with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
     lines = f.read().split("\n")
     # print(len(lines))
     if len(lines) < 15:
