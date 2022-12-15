@@ -5,6 +5,7 @@ import copy
 
 # list(map(int, re.findall(r"\d+", l[1])))
 
+
 def pr(gr):
     for r in gr:
         line = ""
@@ -34,7 +35,7 @@ with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
         points = l.split(" -> ")
         # print(points)
         for s in points:
-            pt = s.split(',')
+            pt = s.split(",")
             p = list(map(int, pt))
             if start:
                 end = p
@@ -70,6 +71,7 @@ with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
 
 # pr(grid2)
 
+
 def fall(w, d, gr):
     global HEIGHT
     global DONE
@@ -97,6 +99,32 @@ def fall(w, d, gr):
         return True
 
 
+def fallq(path, gr):
+    global HEIGHT
+    global DONE
+    global count
+    if not path:
+        return False
+    if len(path) == HEIGHT:
+        DONE = True
+        return False
+    w, d = path[-1]
+    if gr[d + 1][w] == 0:
+        path.append((w, d + 1))
+        return fallq(path, gr)
+    elif gr[d + 1][w - 1] == 0:
+        path.append((w - 1, d + 1))
+        return fallq(path, gr)
+    elif gr[d + 1][w + 1] == 0:
+        path.append((w + 1, d + 1))
+        return fallq(path, gr)
+    else:
+        count += 1
+        gr[d][w] = 1
+        path.pop()
+        return True
+
+
 def part1():
     global DONE
     global count
@@ -104,9 +132,12 @@ def part1():
     count = 0
     # fall(500,0)
     # return
+    path = []
+    path.append((500, 0))
     while not DONE:
-        fall(500, 0, grid)
-    return(count)
+        # fall(500, 0, grid)
+        fallq(path, grid)
+    return count
 
 
 def part2():
@@ -115,10 +146,13 @@ def part2():
     DONE = False
     count = 0
 
-    while fall(500, 0, grid2):
+    path = []
+    path.append((500, 0))
+    # while fall(500, 0, grid2):
+    while fallq(path, grid2):
         pass
 
-    return(count)
+    return count
 
 
 def main():

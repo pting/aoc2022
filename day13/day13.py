@@ -17,7 +17,7 @@ with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
         for l in g:
             node.append(eval(l))
             p2.append(eval(l))
-            
+
         pairs.append(node)
 
 
@@ -48,6 +48,7 @@ def checkp(L, R):
     if L:
         return False
 
+
 def part1():
     res = [False]
     for p in pairs:
@@ -76,8 +77,8 @@ def part2():
             larger -= 1
     # print(smaller)
     # print(larger)
-    return(smaller * larger)
-        
+    return smaller * larger
+
 
 def part2sort():
     p2.append([[2]])
@@ -89,7 +90,7 @@ def part2sort():
         ret = checkp(l, r)
         if ret is None:
             return 0
-        return(-1 if ret else 1)
+        return -1 if ret else 1
 
     sp2 = sorted(p2, key=functools.cmp_to_key(mycmp))
     ret = 1
@@ -97,7 +98,7 @@ def part2sort():
         if v in [[[2]], [[6]]]:
             # print(i + 1)
             ret *= i + 1
-    return(ret)
+    return ret
 
 
 def main():
