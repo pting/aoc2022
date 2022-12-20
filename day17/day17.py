@@ -54,7 +54,7 @@ def move(dir, id, chamber):
     for r, c in pieces:
         chamber[r][c] = id
 
-    if dir == "D":
+    if dir == "D" and all([char == 0 or char == id for char in chamber[-1]]):
         chamber.pop()
     pr(chamber)
     return True
@@ -98,7 +98,7 @@ def part1():
 
             move(w, rocknum, chamber)
             fall = move("D", rocknum, chamber)
-    print(f"Height = {len(chamber)}")
+    # print(f"Height = {len(chamber)}")
     pr(chamber)
     return(len(chamber))
 
