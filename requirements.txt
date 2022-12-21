@@ -1,3 +1,4 @@
 #dill
 #nuitka
 #pytest-benchmark
+sympy
