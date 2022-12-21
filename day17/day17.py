@@ -17,20 +17,17 @@ def pr(arr):
 
 
 rocks = [
-    [['#', '#', '#', '#']],
-    [['.', '#', '.'], ['#', '#', '#'], ['.', '#', '.']],
-    [['#', '#', '#'], ['.', '.', '#'], ['.', '.', '#']],
-    [['#'], ['#'], ['#'], ['#']],
-    [['#', '#'], ['#', '#']],
+    [["#", "#", "#", "#"]],
+    [[".", "#", "."], ["#", "#", "#"], [".", "#", "."]],
+    [["#", "#", "#"], [".", ".", "#"], [".", ".", "#"]],
+    [["#"], ["#"], ["#"], ["#"]],
+    [["#", "#"], ["#", "#"]],
 ]
 # pr(rocks)
 # def canmove(dir, )
 
-DIR = {
-    "D": [-1, 0],
-    "<": [0, -1],
-    ">": [0, 1]
-}
+DIR = {"D": [-1, 0], "<": [0, -1], ">": [0, 1]}
+
 
 def move(dir, id, chamber):
     # print(f"move: {dir, id}")
@@ -42,9 +39,14 @@ def move(dir, id, chamber):
                 newc = c + DIR[dir][1]
                 pieces.append([newr, newc])
                 # print(f"row = {row}, c = {c}, newr = {newr}, newc = {newc}")
-                if newc < 0 or newc > 6 or newr < 0 or (chamber[newr][newc] != 0 and chamber[newr][newc] != id):
-                    return(False)
-    
+                if (
+                    newc < 0
+                    or newc > 6
+                    or newr < 0
+                    or (chamber[newr][newc] != 0 and chamber[newr][newc] != id)
+                ):
+                    return False
+
     # Can move so move
     for r, row in enumerate(chamber):
         for c, rock in enumerate(row):
@@ -64,7 +66,7 @@ def part1():
     global wind
     floor = 0
     chamber = []
-    
+
     rid = 0
     wid = 0
     rocknum = 0
@@ -90,7 +92,7 @@ def part1():
         pr(chamber)
 
         fall = True
-        while(fall):
+        while fall:
             w = wind[wid]
             wid += 1
             if wid == len(wind):
@@ -100,12 +102,70 @@ def part1():
             fall = move("D", rocknum, chamber)
     # print(f"Height = {len(chamber)}")
     pr(chamber)
-    return(len(chamber))
+    return len(chamber)
 
 
 def part2():
-    return None
+    rocks = [
+        [0, 1, 2, 3],
+        [1, 1j, 1 + 1j, 2 + 1j, 1 + 2j],
+        [0, 1, 2, 2 + 1j, 2 + 2j],
+        [0, 1j, 2j, 3j],
+        [0, 1, 1j, 1 + 1j],
+    ]
 
+    jets = [1 if x == ">" else -1 for x in wind]
+    solid = {x - 1j for x in range(7)}
+    height = 0
+
+    seen = {}
+
+    def summarize():
+        o = [-20] * 7
+        
+        for x in solid:
+            r = int(x.real)
+            i = int(x.imag)
+            o[r] = max(o[r], i)
+        
+        top = max(o)
+        return tuple(x - top for x in o)
+
+    rc = 0
+
+    ri = 0
+    rock = {x + 2 + (height + 3) * 1j for x in rocks[ri]}
+
+    T = 1000000000000
+
+    while rc < T:
+        for ji, jet in enumerate(jets):
+            moved = {x + jet for x in rock}
+            if all(0 <= x.real < 7 for x in moved) and not (moved & solid):
+                rock = moved
+            moved = {x - 1j for x in rock}
+            if moved & solid:
+                solid |= rock
+                rc += 1
+                o = height
+                height = max(x.imag for x in solid) + 1
+                if rc >= T:
+                    break
+                ri = (ri + 1) % 5
+                rock = {x + 2 + (height + 3) * 1j for x in rocks[ri]}
+                key = (ji, ri, summarize())
+                if key in seen:
+                    lrc, lh = seen[key]
+                    rem = T - rc
+                    rep = rem // (rc - lrc)
+                    offset = rep * (height - lh)
+                    rc += rep * (rc - lrc)
+                    seen = {}
+                seen[key] = (rc, height)
+            else:
+                rock = moved
+
+    return(int(height + offset))
 
 def main():
     ret = {}
@@ -116,33 +176,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-rockstring = """
-####
-
-.#.
-###
-.#.
-
-..#
-..#
-###
-
-#
-#
-#
-#
-
-##
-##
-"""
-
-rocks = []
-for gr in rockstring.strip().split("\n\n"):
-    ro = []
-    for l in gr.split("\n"):
-        x = [c for c in l]
-        ro.append(x)
-    ro.reverse()
-    rocks.append(ro)

@@ -9,16 +9,19 @@ sys.setrecursionlimit(1000000)
 # list(map(int, re.findall(r"\d+", l[1])))
 pattern = re.compile(r"-?\d+")
 
+
 def pr(arr):
     for a in arr:
         print(a)
+
 
 def prd(d):
     for k, v in d.items():
         print(f"{k}: {v}")
 
+
 M = set()
-bound = [0,0,0]
+bound = [0, 0, 0]
 path = os.path.dirname(os.path.abspath(__file__))
 inputname = sys.argv[1] if len(sys.argv) > 1 else os.path.join(path, "input.txt")
 with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
@@ -41,6 +44,7 @@ alldirs = [
     [0, 0, 1],
 ]
 
+
 def getallnextair(k):
     ret = []
     for dir in alldirs:
@@ -61,6 +65,7 @@ def getallnextlava(k):
 
 outside = set()
 
+
 def bfs(s):
     # print(s)
     q = deque([s])
@@ -70,7 +75,15 @@ def bfs(s):
             continue
         outside.add(p)
         for n in getallnextair(p):
-            if n[0] <= bound[0] + 1 and n[1] <= bound[1] + 1 and n[2] <= bound[2] + 1 and n[0] >= -1 and n[1] >= -1 and n[2] >= -1 and n not in outside:
+            if (
+                n[0] <= bound[0] + 1
+                and n[1] <= bound[1] + 1
+                and n[2] <= bound[2] + 1
+                and n[0] >= -1
+                and n[1] >= -1
+                and n[2] >= -1
+                and n not in outside
+            ):
                 q.append(n)
 
 
@@ -85,7 +98,7 @@ def part1():
     for x in M:
         total += 6 - len(getallnextlava(x))
 
-    return(total)
+    return total
 
 
 def part2():
@@ -97,7 +110,7 @@ def part2():
         for a in getallnextair(k):
             if a not in outside and a not in M:
                 total -= 1
-    return(total)
+    return total
 
 
 def main():

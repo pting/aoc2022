@@ -58,7 +58,8 @@ def part1():
             z = z.next
         t += z.n
 
-    return(t)
+    return t
+
 
 def part2():
     f = open(os.environ.get("AOC_INPUT", inputname), "r")
@@ -105,7 +106,7 @@ def part2():
             z = z.next
         t += z.n
 
-    return(t)
+    return t
 
 
 def main():
