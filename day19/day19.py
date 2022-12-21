@@ -77,7 +77,7 @@ def dfs(st, bp, cache):
         # Do nothing
         res = max(res, dfs(n, bp, cache))
         # build orebot if worth it
-        if st["ore"] >= bp[1] and st["timeleft"] > bp[1]:
+        if st["ore"] >= bp[1] and st["timeleft"] > bp[1] and st["orebot"] < bp[1] + bp[2] + bp[-2] + bp[-4]:
             n["ore"] -= bp[1]
             n["orebot"] += 1
             res = max(res, dfs(n, bp, cache))
