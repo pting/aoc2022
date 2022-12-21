@@ -22,12 +22,13 @@ def part1():
     tunnels = {}
 
     for line in lines:
-        line = line.strip()
-        valve = line.split()[1]
-        flow = int(line.split(";")[0].split("=")[1])
-        targets = line.split("to ")[1].split(" ", 1)[1].split(", ")
-        valves[valve] = flow
-        tunnels[valve] = targets
+        if line:
+            line = line.strip()
+            valve = line.split()[1]
+            flow = int(line.split(";")[0].split("=")[1])
+            targets = line.split("to ")[1].split(" ", 1)[1].split(", ")
+            valves[valve] = flow
+            tunnels[valve] = targets
 
     dists = {}
     nonempty = []
@@ -91,12 +92,13 @@ def part2():
     tunnels = {}
 
     for line in lines:
-        line = line.strip()
-        valve = line.split()[1]
-        flow = int(line.split(";")[0].split("=")[1])
-        targets = line.split("to ")[1].split(" ", 1)[1].split(", ")
-        valves[valve] = flow
-        tunnels[valve] = targets
+        if line:
+            line = line.strip()
+            valve = line.split()[1]
+            flow = int(line.split(";")[0].split("=")[1])
+            targets = line.split("to ")[1].split(" ", 1)[1].split(", ")
+            valves[valve] = flow
+            tunnels[valve] = targets
 
     dists = {}
     nonempty = []
