@@ -9,6 +9,7 @@ def pr(arr):
     for a in arr:
         print("".join(a))
 
+
 M = []
 path = []
 maxc = 0
@@ -29,10 +30,12 @@ with open(os.environ.get("AOC_INPUT", inputname), "r") as f:
                 maxc = max(maxc, len(row))
                 M.append(row)
             else:
-                path = re.split('(\d+)',l.strip())[1:-1]
+                path = re.split("(\d+)", l.strip())[1:-1]
+
 
 def padlist(some_list, target_len):
-    return some_list[:target_len] + [" "]*(target_len - len(some_list))
+    return some_list[:target_len] + [" "] * (target_len - len(some_list))
+
 
 for i in range(len(M)):
     M[i] = padlist(M[i], maxc)
@@ -44,7 +47,7 @@ DIR = {
     "N": (-1, 0, 3, "^"),
     "S": (1, 0, 1, "v"),
     "E": (0, 1, 0, ">"),
-    "W": (0, -1, 2, "<")
+    "W": (0, -1, 2, "<"),
 }
 
 TURN = {
@@ -59,7 +62,7 @@ TURN = {
         "S": "W",
         "E": "S",
         "W": "N",
-    }
+    },
 }
 
 
@@ -93,16 +96,18 @@ def move(loc):
 
     if loc[3][newr][newc] == "#":
         return loc
-    
+
     # print([newr, newc, loc[2]])
     loc[3][newr][newc] = DIR[dir][3]
     return [newr, newc, loc[2], loc[3]]
+
 
 def turn(loc, d):
     # print("turn", loc, d)
     newd = TURN[d][loc[2]]
     loc[2] = newd
     return loc
+
 
 def part1():
     m = copy.deepcopy(M)
@@ -132,55 +137,55 @@ DIR = {
     "N": (-1, 0, 3, "^"),
     "S": (1, 0, 1, "v"),
     "E": (0, 1, 0, ">"),
-    "W": (0, -1, 2, "<")
+    "W": (0, -1, 2, "<"),
 }
 
 
 BOX1 = {
-    "E": lambda r, c: [r, 100, "E"], # BOX2
-    "S": lambda r, c: [50, c, "S"], # BOX3
-    "N": lambda r, c: [100 + c, 0, "E"], # BOX6
-    "W": lambda r, c: [149 - r, 0, "E"], # BOX5
+    "E": lambda r, c: [r, 100, "E"],  # BOX2
+    "S": lambda r, c: [50, c, "S"],  # BOX3
+    "N": lambda r, c: [100 + c, 0, "E"],  # BOX6
+    "W": lambda r, c: [149 - r, 0, "E"],  # BOX5
 }
 TUP1 = list(BOX1.items())
 
 BOX2 = {
-    "E": lambda r, c: [149 - r, 99, "W"], # BOX4
-    "S": lambda r, c: [c - 50, 99, "W"], # BOX3
-    "N": lambda r, c: [199, c - 100, "N"], # BOX6
-    "W": lambda r, c: [r, 99, "W"], # BOX5
+    "E": lambda r, c: [149 - r, 99, "W"],  # BOX4
+    "S": lambda r, c: [c - 50, 99, "W"],  # BOX3
+    "N": lambda r, c: [199, c - 100, "N"],  # BOX6
+    "W": lambda r, c: [r, 99, "W"],  # BOX5
 }
 TUP2 = list(BOX2.items())
 
 BOX3 = {
-    "E": lambda r, c: [49, r + 50, "N"], # BOX4
-    "S": lambda r, c: [r + 1, c, "S"], # BOX3
-    "N": lambda r, c: [r - 1, c, "N"], # BOX6
-    "W": lambda r, c: [100, r - 50, "S"], # BOX5
+    "E": lambda r, c: [49, r + 50, "N"],  # BOX4
+    "S": lambda r, c: [r + 1, c, "S"],  # BOX3
+    "N": lambda r, c: [r - 1, c, "N"],  # BOX6
+    "W": lambda r, c: [100, r - 50, "S"],  # BOX5
 }
 TUP3 = list(BOX3.items())
 
 BOX4 = {
-    "E": lambda r, c: [149 - r, 149, "W"], # BOX2
-    "S": lambda r, c: [c + 100, 49, "W"], # BOX6
-    "N": lambda r, c: [r - 1, c, "N"], # BOX3
-    "W": lambda r, c: [r, c - 1, "W"], # BOX5
+    "E": lambda r, c: [149 - r, 149, "W"],  # BOX2
+    "S": lambda r, c: [c + 100, 49, "W"],  # BOX6
+    "N": lambda r, c: [r - 1, c, "N"],  # BOX3
+    "W": lambda r, c: [r, c - 1, "W"],  # BOX5
 }
 TUP4 = list(BOX4.items())
 
 BOX5 = {
-    "E": lambda r, c: [r, c + 1, "E"], # BOX4
-    "S": lambda r, c: [r + 1, c, "S"], # BOX6
-    "N": lambda r, c: [50 + c, 50, "E"], # BOX3
-    "W": lambda r, c: [149 - r, 50, "E"], # BOX5
+    "E": lambda r, c: [r, c + 1, "E"],  # BOX4
+    "S": lambda r, c: [r + 1, c, "S"],  # BOX6
+    "N": lambda r, c: [50 + c, 50, "E"],  # BOX3
+    "W": lambda r, c: [149 - r, 50, "E"],  # BOX5
 }
 TUP5 = list(BOX5.items())
 
 BOX6 = {
-    "E": lambda r, c: [149, r - 100, "N"], # BOX4
-    "S": lambda r, c: [0, c + 100, "S"], # BOX2
-    "N": lambda r, c: [r - 1, c, "N"], # BOX5
-    "W": lambda r, c: [0, r - 100, "S"], # BOX1
+    "E": lambda r, c: [149, r - 100, "N"],  # BOX4
+    "S": lambda r, c: [0, c + 100, "S"],  # BOX2
+    "N": lambda r, c: [r - 1, c, "N"],  # BOX5
+    "W": lambda r, c: [0, r - 100, "S"],  # BOX1
 }
 TUP6 = list(BOX6.items())
 
@@ -188,13 +193,14 @@ RBOUND = [
     [0, 50, {tuple(TUP1), tuple(TUP2)}],
     [50, 100, {tuple(TUP3)}],
     [100, 150, {tuple(TUP5), tuple(TUP4)}],
-    [150, 200, {tuple(TUP6)}]
+    [150, 200, {tuple(TUP6)}],
 ]
 CBOUND = [
     [0, 50, {tuple(TUP5), tuple(TUP6)}],
     [50, 100, {tuple(TUP1), tuple(TUP3), tuple(TUP4)}],
     [100, 150, {tuple(TUP2)}],
 ]
+
 
 def getbox(r, c):
     # print("getbox:", r, c)
@@ -211,12 +217,13 @@ def getbox(r, c):
             tup = tup.intersection(cb[2])
             # print("3", tup)
             break
-    
+
     for t in tup:
         for (k, v) in t:
             box[k] = v
     # print("got box:", box)
     return box
+
 
 def move2(loc):
     global M
@@ -224,7 +231,12 @@ def move2(loc):
     # print("go", loc)
 
     dir = loc[2]
-    if (dir == "N" and loc[0] in [0, 50, 100, 150]) or (dir == "S" and loc[0]in [49, 99, 149, 199]) or (dir == "E" and loc[1] in [49, 99, 149, 199]) or (dir == "W" and loc[1] in [0, 50, 100, 150]):
+    if (
+        (dir == "N" and loc[0] in [0, 50, 100, 150])
+        or (dir == "S" and loc[0] in [49, 99, 149, 199])
+        or (dir == "E" and loc[1] in [49, 99, 149, 199])
+        or (dir == "W" and loc[1] in [0, 50, 100, 150])
+    ):
         # print("Old location:", loc)
         oldbox = getbox(loc[0], loc[1])
         newr, newc, newdir = oldbox[loc[2]](loc[0], loc[1])
