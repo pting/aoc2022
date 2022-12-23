@@ -4,7 +4,7 @@ set -e
 echo ""
 echo "\033[36m"
 if [ "$4" ]; then
-    echo "Starting Week $4"
+    echo "Starting Day $4"
 fi
 echo "Running $1"
 echo ""
