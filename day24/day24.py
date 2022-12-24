@@ -107,15 +107,15 @@ def part1():
                 newq.append(oldloc)
 
         q = newq
-        m = copy.deepcopy(nm)
+        m = nm
 
 
 def part2():
     targets = [(len(M) - 1, len(M[0]) - 2), (0, 1), (len(M) - 1, len(M[0]) - 2)]
     trip = targets.pop(0)
 
-    el = (0, 1)  # r, c, t
-    m = copy.deepcopy(M)
+    el = (0, 1)
+    m = M
 
     minute = 0
     q = deque()
@@ -196,7 +196,7 @@ def part2():
                 newq.append(oldloc)
 
         q = newq
-        m = copy.deepcopy(nm)
+        m = nm
 
 
 def main():
