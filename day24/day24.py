@@ -39,12 +39,7 @@ def pr1(arr, r, c):
         print("".join(s))
 
 
-def part1():
-    el = (0, 1)  # r, c, t
-
-    m = copy.deepcopy(M)
-
-    minute = 0
+def go(el, end, m, minute):
     q = deque()
     q.append(el)
 
@@ -90,102 +85,13 @@ def part1():
 
             for d in ["^", "v", ">", "<"]:
                 newloc = (r := elf[0] + DIR[d][0], c := elf[1] + DIR[d][1], minute)
-                if r == len(nm) - 1 and c == len(nm[0]) - 2:
-                    return minute
+                if r == end[0] and c == end[1]:
+                    return minute, nm
                 if r >= 1 and r <= len(nm) - 2 and c >= 1 and c <= len(nm[r]) - 2:
                     if not nm[r][c]:
                         newq.append(newloc)
 
             if (
-                not nm[elf[0]][elf[1]]
-                and elf[0] >= 1
-                and elf[0] <= len(nm) - 2
-                and elf[1] >= 1
-                and elf[1] <= len(nm[r]) - 2
-            ):
-                oldloc = (elf[0], elf[1], minute)
-                newq.append(oldloc)
-
-        q = newq
-        m = nm
-
-
-def part2():
-    targets = [(len(M) - 1, len(M[0]) - 2), (0, 1), (len(M) - 1, len(M[0]) - 2)]
-    trip = targets.pop(0)
-
-    el = (0, 1)
-    m = M
-
-    minute = 0
-    q = deque()
-    q.append(el)
-    dups = 0
-
-    while True:
-        minute += 1
-        nm = []
-        for r in range(len(m)):
-            row = []
-            for c in range(len(m[r])):
-                if m[r][c] == ["#"]:
-                    row.append(["#"])
-                else:
-                    row.append([])
-            nm.append(row)
-
-        for r in range(len(m)):
-            for c in range(len(m[r])):
-                for v in m[r][c]:
-                    match v:
-                        case "#" | " ":
-                            pass
-                        case "^" | "v" | ">" | "<":
-                            nr = r + DIR[v][0]
-                            nc = c + DIR[v][1]
-                            if nr == 0:
-                                nr = len(nm) - 2
-                            elif nr == len(nm) - 1:
-                                nr = 1
-                            if nc == 0:
-                                nc = len(nm[r]) - 2
-                            elif nc == len(nm[r]) - 1:
-                                nc = 1
-                            nm[nr][nc].append(v)
-
-        visited = set()
-        newq = deque()
-        newtrip = False
-        while q:
-            el = q.popleft()
-            elf = (el[0], el[1], minute)
-            if elf in visited:
-                dups += 1
-                # print("duplicate elf detected", dups)
-                continue
-            visited.add(elf)
-
-            newtrip = False
-            for d in ["^", "v", ">", "<"]:
-                newloc = (r := elf[0] + DIR[d][0], c := elf[1] + DIR[d][1], minute)
-                if r == trip[0] and c == trip[1]:
-                    # print("trip", trip, "ended at", r, c, minute, "targets:", targets)
-                    if targets:
-                        trip = targets.pop(0)
-                        newtrip = True
-                        newq.clear()
-                        newq.append(newloc)
-                        break
-                    else:
-                        return minute
-                if r >= 1 and r <= len(nm) - 2 and c >= 1 and c <= len(nm[r]) - 2:
-                    if not nm[r][c]:
-                        newq.append(newloc)
-            if newtrip:
-                q.clear()
-                newtrip = False
-                break
-            elif (
                 not nm[elf[0]][elf[1]]
                 and elf[0] >= 0
                 and elf[0] <= len(nm) - 1
@@ -198,6 +104,23 @@ def part2():
         q = newq
         m = nm
 
+
+def part1():
+    m = copy.deepcopy(M)
+    destination = (len(M) - 1, len(M[0]) - 2)
+    count, m = go((0, 1), destination, m, 0)
+    return count
+
+
+def part2():
+    minute = 0
+    destination = (len(M) - 1, len(M[0]) - 2)
+    c1, m = go((0, 1), destination, M, 0)
+    c2, m = go(destination, (0,1), m, c1)
+    c3, _ = go((0, 1), destination, m, c2)
+    
+    # [(len(M) - 1, len(M[0]) - 2), (0, 1), (len(M) - 1, len(M[0]) - 2)]
+    return c3
 
 def main():
     ret = {}
