@@ -59,8 +59,6 @@ def go(el, end, m, minute):
             for c in range(len(m[r])):
                 for v in m[r][c]:
                     match v:
-                        case "#" | " ":
-                            pass
                         case "^" | "v" | ">" | "<":
                             nr = r + DIR[v][0]
                             nc = c + DIR[v][1]
@@ -113,14 +111,12 @@ def part1():
 
 
 def part2():
-    minute = 0
     destination = (len(M) - 1, len(M[0]) - 2)
     c1, m = go((0, 1), destination, M, 0)
-    c2, m = go(destination, (0,1), m, c1)
+    c2, m = go(destination, (0, 1), m, c1)
     c3, _ = go((0, 1), destination, m, c2)
-    
-    # [(len(M) - 1, len(M[0]) - 2), (0, 1), (len(M) - 1, len(M[0]) - 2)]
     return c3
+
 
 def main():
     ret = {}
